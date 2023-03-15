@@ -93,6 +93,7 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
 
 li:hover {
@@ -124,6 +125,27 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+/* paramètres de la section Filtre */
+.filters_section {
+	text-align: center;
+	margin-bottom: 1em;
+}
+.filters_section button:first-child {
+	color: white;
+	background-color: #1D6154; 
+	padding: 9px 18px;
+}
+.filters_section button {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	color: #1D6154;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	margin: 10px;
+	padding: 9px 12px;
+	cursor: pointer;
 }
 .gallery {
 	width: 100%;
@@ -178,6 +200,7 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
 
 footer nav ul {
