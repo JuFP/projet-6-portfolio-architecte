@@ -1,18 +1,9 @@
 //récupération dynamique des projets de l'architecte//
-let works
 fetch('http://localhost:5678/api/works') //envoi requête à l'API//
   .then(reponse => reponse.json())
   .then(travaux => {
-    console.log(travaux); //affichage de ce qui est récupéré//
-    works = travaux
-    //création du html dynamique de la galerie de projets//
+    //création du html dynamique de la galerie de projets à l'arrivée sur la page//
     let galerie = document.querySelector(".gallery");
-
-
-      // const recupNomCategorie = travaux.map(projet => projet.category.name);
-      // console.log(recupNomCategorie); 
-      // console.log(travaux[2].category.name); //récupération du nom de la category du projet à l'indice2 du tableau travaux//
-
     for (let i = 0; i < travaux.length; i++) {
       const projet = document.createElement("figure"); 
       const photo = document.createElement("img");
@@ -23,41 +14,65 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       projet.appendChild(legende);
       galerie.appendChild(projet);
     }
-    fetch('http://localhost:5678/api/categories')
-    .then(reponse => reponse.json())
-    .then(filtres => {
-      console.log("filtres", "travaux", filtres, travaux);
-      console.log(filtres);
-    console.log(works, "works");
-    let sectionFiltres = document.querySelector(".filters_section");
-    const tous = document.createElement("button");//rajout bouton "Tous"//
-    tous.setAttribute("id", "boutonTous"); //attribution d'id au bouton Tous//
-    tous.innerHTML = "Tous";
-    sectionFiltres.appendChild(tous);
-  //création des boutons en html dynamique// 
-    filtres.forEach(filtre => {
-      const bouton = document.createElement("button"); //création des sélecteurs button//
-      bouton.innerHTML = filtre.name; //attribution texte du bouton de chaque filtre//
-      sectionFiltres.appendChild(bouton);
-      bouton.setAttribute("id", filtre.id); //attribution d'id aux autres boutons//
-      //essais écouteurs d'événements au clic//
-      const essaiClicTous = document.getElementById('boutonTous');
-      essaiClicTous.addEventListener('click', () => {
-        console.log("clic sur bouton tous");
-      })
-      const essaiClicObjets = document.getElementById('1');
-      essaiClicObjets.addEventListener('click', () => {	
-        console.log("clic sur objet"); 
+    //récupération des catégories existantes//
+    const categories = new Set();
+    for (let j = 0; j < travaux.length; j++) {
+      if (!categories.has(travaux[j].category.name)) {
+        categories.add("Tous");
+        categories.add(travaux[j].category.name);
+      }
+    }
+    // création des boutons de catégorie
+    const categoriesTableau = Array.from(categories);
+    const categorieSection = document.querySelector(".filters_section");
+    for (let k = 0; k < categoriesTableau.length; k++) {
+      const categorieBouton = document.createElement("button");
+      categorieBouton.textContent = categoriesTableau[k];
+      categorieSection.appendChild(categorieBouton);
+    }
+    //événements au clic sur les boutons//
+    const tousLesBoutons = document.querySelectorAll(".filters_section button");
+    tousLesBoutons.forEach(bouton => {
+      bouton.addEventListener("click", () => {
+        //on supprime les projets qui ne sont pas de la bonne catégorie
+        galerie.innerHTML = "";
+        // on récupère la catégorie qui est cliquée
+        const categorie = bouton.textContent;
+        //on affiche les projets de la catégorie concernée
+        const projetsFiltres = travaux.filter(projet => {
+          if (categorie === "Tous") {
+            return true;
+          } else {
+            return projet.category.name === categorie;
+          }
+        });
+        // on recrée dynamiquement les travaux après filtrage
+        for (let m = 0; m < projetsFiltres.length; m++) {
+          const projet = document.createElement("figure"); 
+          const photo = document.createElement("img");
+          const legende = document.createElement("figcaption"); 
+          photo.src = projetsFiltres[m].imageUrl;
+          legende.innerHTML = projetsFiltres[m].title;
+          projet.appendChild(photo);
+          projet.appendChild(legende);
+          galerie.appendChild(projet);
+        }
       });
-      const essaiClicAppartements = document.getElementById('2');
-      essaiClicAppartements.addEventListener('click', () => {	
-        console.log("clic sur appartements"); 
-      });
-      const essaiClicHotels = document.getElementById('3');
-      essaiClicHotels.addEventListener('click', () => {	
-        console.log("clic sur hôtels"); 
-      });
-    })
-  })
-  })
+    });
+  });
 
+//Lorsqu'il y a connexion: création de cette div:// 
+  let bandeauNoir = document.querySelector("#bandeau-edit");
+  const texteEdition = document.createElement('p');
+  texteEdition.classList.add("txt-edition");
+  texteEdition.textContent = "Mode édition";
+  const iconeEdition = document.createElement('i');
+  iconeEdition.classList.add("fa-regular","fa-pen-to-square");
+  const boutonPubli = document.createElement('button');
+  boutonPubli.classList.add("btn-publi");
+  boutonPubli.textContent = "Publier les changements";
+  bandeauNoir.appendChild(iconeEdition);
+  bandeauNoir.appendChild(texteEdition);
+  bandeauNoir.appendChild(boutonPubli);
+  
+    console.log(bandeauNoir);
