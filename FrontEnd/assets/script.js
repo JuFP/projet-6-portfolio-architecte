@@ -60,9 +60,14 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       });
     });
   });
-
 //Lorsqu'il y a connexion: création de cette div:// 
-  let bandeauNoir = document.querySelector("#bandeau-edit");
+//Y a-t-il le token?
+//création et affichage de la barre noire et ce qu'elle contient
+const authToken = localStorage.getItem("identifToken");
+if(authToken) {
+  const body = document.getElementsByTagName("body");
+  const div = document.createElement("div");
+  div.setAttribute("id", "bandeau-edit");
   const texteEdition = document.createElement('p');
   texteEdition.classList.add("txt-edition");
   texteEdition.textContent = "Mode édition";
@@ -71,8 +76,26 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
   const boutonPubli = document.createElement('button');
   boutonPubli.classList.add("btn-publi");
   boutonPubli.textContent = "Publier les changements";
-  bandeauNoir.appendChild(iconeEdition);
-  bandeauNoir.appendChild(texteEdition);
-  bandeauNoir.appendChild(boutonPubli);
+  div.appendChild(iconeEdition);
+  div.appendChild(texteEdition);
+  div.appendChild(boutonPubli);
+  body[0].prepend(div);
+  //changement login en logout
+  const texteLogin = document.querySelector(".txt-login");
+  texteLogin.innerHTML = "logout"; 
+  //suppression affichage boutons de filtre
+  const sectionFiltres = document.querySelector(".filters_section");
+  sectionFiltres.style.display = 'none';
+} else {
+  //En dehors du mode admin:
+  //suppression affichage crayon+texte pour modifier photo de profil
+  const photoProfil = document.querySelector('.modifier-photo');
+  photoProfil.style.display = 'none';
+  //suppression affichage crayon+texte pour modifier projets
+  const modifProjets = document.querySelector('.modifier-projet');
+  modifProjets.style.display = 'none';
+  //suppression affichage crayon+texte pour modifier intro
+  const modifIntro = document.querySelector('.modifier-intro');
+  modifIntro.style.display = 'none';
+}
   
-    console.log(bandeauNoir);

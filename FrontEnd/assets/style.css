@@ -49,11 +49,14 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 	background: #FFFEF8;
+}
+.container {
+	max-width: 1140px;
+	margin:auto;
 }
 /* css index.html ---> login */
 #bandeau-edit {
@@ -73,10 +76,12 @@ body {
 .btn-publi {
 	height: 38px;
 	width: 216px;
+	border: none;
 	border-radius: 60px;
 	background-color: white;
 	font-family: 'Work Sans';
 	margin-left: 21px;
+	cursor: pointer;
 }
 header {
 	display: flex;
@@ -132,15 +137,25 @@ li:hover a {
 	align-items: center;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
 #introduction img {
 	display: block;
 	margin: auto;
 	width: 80%;
+	padding-bottom: 10px;
+}
+.modifier-photo {
+	display: flex;
+	margin: auto;
+	align-items: baseline;
+	width: 80%;
+}
+.modifier-intro {
+	display: flex;
 }
 #introduction article {
-	flex: 1
+	flex: 1;
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -148,9 +163,14 @@ li:hover a {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
+.modifier-projet {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
 	margin-bottom: 1em;
+}
+.modifier-projet i {
+	padding-left: 31px;
 }
 /* paramètres de la section Filtre */
 .filters_section {
@@ -221,6 +241,15 @@ li:hover a {
 	color: #3D3D3D;
 	text-decoration: underline;
 }
+.section-login {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 550px;
+}
+.erreur-login {
+	color: red;
+}
 
 input[type="submit"]{
 	font-family: 'Syne';
@@ -233,22 +262,14 @@ input[type="submit"]{
 	border-radius: 60px ;
 	cursor: pointer;
 }
-.footer {
+footer {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 	background: #FFFFFF;
 	height: 60px;
 }
-.footer-login {
-	position: absolute; 
-	left: -1px;
-	right: -1px;
-	bottom: -10px;
-	width: 100%;
-}
 footer nav {	
 	margin-right: 107px;
-	
 }
 
