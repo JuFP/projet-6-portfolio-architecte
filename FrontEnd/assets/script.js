@@ -29,6 +29,10 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       const categorieBouton = document.createElement("button");
       categorieBouton.textContent = categoriesTableau[k];
       categorieSection.appendChild(categorieBouton);
+      //pour que le bouton soit coloré à l'arrivée sur la page
+      if (k === 0) { //index 0 du tableau de catégories
+        categorieBouton.classList.add("button-colored");
+      }
     }
     //événements au clic sur les boutons//
     const tousLesBoutons = document.querySelectorAll(".filters_section button");
@@ -57,9 +61,17 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
           projet.appendChild(legende);
           galerie.appendChild(projet);
         }
+        // Ajout de la classe button-colored au bouton cliqué
+        tousLesBoutons.forEach(otherButton => {
+        if (otherButton === bouton) {
+          otherButton.classList.add("button-colored");
+        } else {
+          otherButton.classList.remove("button-colored");
+        }
       });
     });
   });
+});
 //Lorsqu'il y a connexion: création de cette div:// 
 //Y a-t-il le token?
 //création et affichage de la barre noire et ce qu'elle contient
@@ -86,6 +98,9 @@ if(authToken) {
   //suppression affichage boutons de filtre
   const sectionFiltres = document.querySelector(".filters_section");
   sectionFiltres.style.display = 'none';
+  //suppression affichage du titre "Mes Projets" seul
+  const titreH2 = document.querySelector(".titre-seul");
+  titreH2.style.display = 'none'; 
 } else {
   //En dehors du mode admin:
   //suppression affichage crayon+texte pour modifier photo de profil
@@ -97,5 +112,4 @@ if(authToken) {
   //suppression affichage crayon+texte pour modifier intro
   const modifIntro = document.querySelector('.modifier-intro');
   modifIntro.style.display = 'none';
-}
-  
+};

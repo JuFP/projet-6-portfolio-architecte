@@ -58,6 +58,10 @@ body {
 	max-width: 1140px;
 	margin:auto;
 }
+hr {
+width: 420px;
+border: 1px solid #B3B3B3;	
+}
 /* css index.html ---> login */
 #bandeau-edit {
 	height: 59px;
@@ -150,9 +154,11 @@ li:hover a {
 	margin: auto;
 	align-items: baseline;
 	width: 80%;
+	cursor: pointer;
 }
 .modifier-intro {
 	display: flex;
+	cursor: pointer;
 }
 #introduction article {
 	flex: 1;
@@ -163,24 +169,95 @@ li:hover a {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+#portfolio h2 {
+	text-align: center;
+}
 .modifier-projet {
 	display: flex;
 	justify-content: center;
 	align-items: baseline;
-	margin-bottom: 1em;
+	margin-bottom: 3em;
 }
 .modifier-projet i {
 	padding-left: 31px;
+	cursor: pointer;
+}
+.modifier-projet__texte {
+	cursor: pointer;
+	color: black;
+}
+.modifier-projet__texte:visited {
+	color: black;
+}
+/* paramètres modale */
+.fenetre-modale {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	width: 600px;
+	min-height: 730px;
+	text-align: center;
+	border-radius: 10px; 
+	background-color: white;
+	padding: 48px 99px;
+}
+.titre-modale {
+	font-size: 26px;
+}
+.supp-galerie {
+	font-family: "Syne";
+	font-size: 14px;
+}
+.section-projets {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	row-gap: 10px;
+	margin: 46px 0px;
+}
+.section-projets img {
+	width: 90%;
+}
+.section-projets .fa-trash-can {
+	font-size: 13px;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	padding: 7px;
+	position: relative;
+	bottom: 80%;
+	right: -29%;
+	cursor: pointer;
+}
+.section-projets .fa-arrows-up-down-left-right {
+	font-size: 13px;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	padding: 7px;
+	position: relative;
+	bottom: 80%;
+	right: -25%;
+}
+.fa-xmark {
+	font-size: 12.01px;
+	cursor: pointer;
+	display: flex;
+	justify-content: flex-end;
+}
+.supp-galerie {
+	color: #D65353;
+	cursor: pointer;
 }
 /* paramètres de la section Filtre */
 .filters_section {
 	text-align: center;
 	margin-bottom: 1em;
 }
-.filters_section button:first-child {
+.filters_section .button-colored {
 	color: white;
-	background-color: #1D6154; 
-	padding: 9px 18px;
+	background-color: #1D6154;
 }
 .filters_section button {
 	font-family: 'Syne';
@@ -191,7 +268,7 @@ li:hover a {
 	border: 1px solid #1D6154;
 	border-radius: 60px;
 	margin: 10px;
-	padding: 9px 12px;
+	padding: 9px 18px;
 	cursor: pointer;
 }
 .gallery {
@@ -225,7 +302,7 @@ li:hover a {
 }
 
 #contact input {
-	height: 50px;
+	height: 36px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -250,7 +327,6 @@ li:hover a {
 .erreur-login {
 	color: red;
 }
-
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -258,8 +334,10 @@ input[type="submit"]{
 	background-color: #1D6154;
 	margin : 2em auto ;
 	width: 180px;
+	height: 36px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
+	border: none;
 	cursor: pointer;
 }
 footer {
