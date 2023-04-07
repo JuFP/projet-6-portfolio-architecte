@@ -1,7 +1,7 @@
 //PARAMETRAGE MODALE//
 let modale = null; //pour savoir quelle modale est ouverte
 const ouvrirModale = function (e) {
-  e.preventDefault();
+  e.stopPropagation();
   const target = document.querySelector(e.target.getAttribute('href'));
   target.style.display = null;
   target.removeAttribute('aria-hidden');
@@ -14,6 +14,10 @@ const ouvrirModale = function (e) {
   document.body.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
   //scroll désactivé à l'ouverture de la modale
   document.body.style.overflow = 'hidden';
+  document.body.addEventListener('click', function(e) {
+    console.log("je clique");
+    fermerModale(e);
+  });
 };
 const fermerModale = function (e) {
   if (modale === null) return; //si modale non existante, arrêt de la fonction
@@ -49,6 +53,12 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
   .then(travaux => {
     //création du html dynamique de la fenêtre modale//
     let photosModale = document.querySelector(".section-projets");
+    //on rend invisible la flèche gauche du html
+    const flecheGauche = document.querySelector(".fa-solid.fa-arrow-left-long");
+    flecheGauche.style.visibility = 'hidden';
+    //on désactive le formulaire modale
+    let zoneFormulaire = document.querySelector(".section-formulaire");
+    zoneFormulaire.style.display = 'none';
     for (let i = 0; i < travaux.length; i++) {
       const projet = document.createElement("figure"); 
       const photo = document.createElement("img");
@@ -68,6 +78,7 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       //consolelog au clic sur chaque poubelle
       poubelle.addEventListener('click', function() {
         console.log("je clique sur poubelle!");
+
       });
     }
 });
@@ -85,6 +96,9 @@ document.querySelector(".fenetre-modale").appendChild(suppGalerie);
 //au clic sur bouton Ajouter, supprimer certains visuels
 //changement dynamique du contenu de la modale
 boutonAjouter.addEventListener ('click', function() {
+  //on rend visible la flèche gauche
+  const flecheGauche = document.querySelector(".fa-solid.fa-arrow-left-long");
+  flecheGauche.style.visibility = 'visible';
   let photosModale = document.querySelector(".section-projets");
   photosModale.style.display = 'none';
   let titreModale = document.querySelector(".titre-modale");
@@ -92,5 +106,31 @@ boutonAjouter.addEventListener ('click', function() {
   boutonAjouter.setAttribute("value", "Valider");
   boutonAjouter.style.backgroundColor = "#A7A7A7";
   suppGalerie.style.display = 'none';
+  //création dynamique du formulaire d'ajout de travaux
+  let zoneFormulaire = document.querySelector(".section-formulaire");
+  //on réactive l'affichage de la zone de formulaire
+  zoneFormulaire.style.display = 'block';
+  let formAjoutPhoto = document.createElement("form");
+  formAjoutPhoto.action = "#"; //pour définir l'attribut action et method du form
+  formAjoutPhoto.method = "post";
+  //création des champs de formulaire
+  let rubriqueTitre = document.createElement("label");
+  rubriqueTitre.setAttribute("for", "name");
+  rubriqueTitre.innerHTML = "Titre";
+  let champTitre = document.createElement("input");
+  champTitre.setAttribute("type", "text");
+  champTitre.setAttribute("name", "name");
+  champTitre.setAttribute("id", "name");
+  let rubriqueSelect = document.createElement("label");
+  rubriqueSelect.setAttribute("for", "name");
+  rubriqueSelect.innerHTML = "Catégorie";
+  let champSelect = document.createElement("select");
+  champSelect.setAttribute("name", "select");
+  champSelect.setAttribute("id", "select");
+  zoneFormulaire.appendChild(formAjoutPhoto);
+  formAjoutPhoto.appendChild(rubriqueTitre);
+  formAjoutPhoto.appendChild(champTitre);
+  formAjoutPhoto.appendChild(rubriqueSelect);
+  formAjoutPhoto.appendChild(champSelect);
 });
 

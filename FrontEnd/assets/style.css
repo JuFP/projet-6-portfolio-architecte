@@ -201,23 +201,19 @@ li:hover a {
 	text-align: center;
 	border-radius: 10px; 
 	background-color: white;
-	padding: 48px 99px;
+	padding: 30px 70px;
 }
 .titre-modale {
-	font-size: 26px;
-}
-.supp-galerie {
-	font-family: "Syne";
-	font-size: 14px;
+	font-size: 20px;
 }
 .section-projets {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	row-gap: 10px;
-	margin: 46px 0px;
+	margin: 44px 0px 0px 0px;
 }
 .section-projets img {
-	width: 90%;
+	width: 80%;
 }
 .section-projets .fa-trash-can {
 	font-size: 13px;
@@ -226,8 +222,8 @@ li:hover a {
 	border-radius: 5px;
 	padding: 7px;
 	position: relative;
-	bottom: 80%;
-	right: -29%;
+	bottom: 79%;
+	right: -25%;
 	cursor: pointer;
 }
 .section-projets .fa-arrows-up-down-left-right {
@@ -237,18 +233,44 @@ li:hover a {
 	border-radius: 5px;
 	padding: 7px;
 	position: relative;
-	bottom: 80%;
-	right: -25%;
-}
-.fa-xmark {
-	font-size: 12.01px;
-	cursor: pointer;
-	display: flex;
-	justify-content: flex-end;
+	bottom: 79%;
+	right: -21%;
 }
 .supp-galerie {
 	color: #D65353;
 	cursor: pointer;
+	font-family: "Syne";
+	font-size: 14px;
+}
+.icones-modale {
+	display: flex;
+	justify-content: space-between;
+	font-size: 14px;
+	cursor: pointer;
+}
+/* paramètres formulaire de la modale */
+.section-formulaire {
+	display: flex;
+	flex-direction: column;
+}
+.section-formulaire form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	background-color: #B1663C;
+	min-height: 600px;
+	width: 100%;
+}
+.section-formulaire label {
+	height: 36px;
+}
+.section-formulaire input, select {
+	height: 36px;
+	border: 1px solid pink;
+	width: 100%;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 20px;
 }
 /* paramètres de la section Filtre */
 .filters_section {
