@@ -33,6 +33,7 @@ const fermerModale = function (e) {
   document.body.style.backgroundColor = "initial";
   //scroll rétabli à la fermeture de la modale
   document.body.style.overflow = 'auto';
+
 };
 const stopPropagation = function (e) {
   e.stopPropagation();  
@@ -53,12 +54,6 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
   .then(travaux => {
     //création du html dynamique de la fenêtre modale//
     let photosModale = document.querySelector(".section-projets");
-    //on rend invisible la flèche gauche du html
-    const flecheGauche = document.querySelector(".fa-solid.fa-arrow-left-long");
-    flecheGauche.style.visibility = 'hidden';
-    //on désactive le formulaire modale
-    let zoneFormulaire = document.querySelector(".section-formulaire");
-    zoneFormulaire.style.display = 'none';
     for (let i = 0; i < travaux.length; i++) {
       const projet = document.createElement("figure"); 
       const photo = document.createElement("img");
@@ -78,59 +73,69 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       //consolelog au clic sur chaque poubelle
       poubelle.addEventListener('click', function() {
         console.log("je clique sur poubelle!");
-
       });
     }
+    //on désactive la flèche gauche du html
+    const flecheGauche = document.querySelector(".fleche-retour");
+    flecheGauche.style.display = 'none';
+    //on désactive la modale de formulaire
+    let zoneFormulaire = document.querySelector(".section-formulaire");
+    zoneFormulaire.style.display = 'none';
 });
-//création dynamique du bouton//
-let boutonAjouter = document.createElement("input");
-boutonAjouter.setAttribute("type", "submit");
-boutonAjouter.setAttribute("value", "Ajouter une photo");
-document.querySelector(".fenetre-modale").appendChild(boutonAjouter);
-//ajout texte "supprimer la galerie"//
-let suppGalerie = document.createElement('p');
-suppGalerie.classList.add("supp-galerie");
-suppGalerie.textContent = "Supprimer la galerie";
-document.querySelector(".fenetre-modale").appendChild(suppGalerie);
 
-//au clic sur bouton Ajouter, supprimer certains visuels
-//changement dynamique du contenu de la modale
+//au clic sur bouton Ajouter, affichage modale d'ajout travaux
+const boutonAjouter = document.querySelector(".btn-ajouter");
 boutonAjouter.addEventListener ('click', function() {
-  //on rend visible la flèche gauche
-  const flecheGauche = document.querySelector(".fa-solid.fa-arrow-left-long");
-  flecheGauche.style.visibility = 'visible';
-  let photosModale = document.querySelector(".section-projets");
-  photosModale.style.display = 'none';
+  //changement du titre de la modale:
   let titreModale = document.querySelector(".titre-modale");
   titreModale.innerHTML = "Ajout photo";
-  boutonAjouter.setAttribute("value", "Valider");
-  boutonAjouter.style.backgroundColor = "#A7A7A7";
-  suppGalerie.style.display = 'none';
-  //création dynamique du formulaire d'ajout de travaux
-  let zoneFormulaire = document.querySelector(".section-formulaire");
-  //on réactive l'affichage de la zone de formulaire
-  zoneFormulaire.style.display = 'block';
-  let formAjoutPhoto = document.createElement("form");
-  formAjoutPhoto.action = "#"; //pour définir l'attribut action et method du form
-  formAjoutPhoto.method = "post";
-  //création des champs de formulaire
-  let rubriqueTitre = document.createElement("label");
-  rubriqueTitre.setAttribute("for", "name");
-  rubriqueTitre.innerHTML = "Titre";
-  let champTitre = document.createElement("input");
-  champTitre.setAttribute("type", "text");
-  champTitre.setAttribute("name", "name");
-  champTitre.setAttribute("id", "name");
-  let rubriqueSelect = document.createElement("label");
-  rubriqueSelect.setAttribute("for", "name");
-  rubriqueSelect.innerHTML = "Catégorie";
-  let champSelect = document.createElement("select");
-  champSelect.setAttribute("name", "select");
-  champSelect.setAttribute("id", "select");
-  zoneFormulaire.appendChild(formAjoutPhoto);
-  formAjoutPhoto.appendChild(rubriqueTitre);
-  formAjoutPhoto.appendChild(champTitre);
-  formAjoutPhoto.appendChild(rubriqueSelect);
-  formAjoutPhoto.appendChild(champSelect);
+  //on n'affiche plus la galerie:
+  let zoneProjets = document.querySelector(".zone-projets");
+  zoneProjets.style.display='none';
+  //on active l'affichage de la flèche retour
+  const flecheGauche = document.querySelector(".fleche-retour");
+  flecheGauche.style.display ='block';
+  //on active l'affichage du formulaire
+  const formulaire = document.querySelector(".section-formulaire");
+  formulaire.style.display='block';
 });
+// au clic sur flèche retour, réactivation de la première modale
+const flecheGauche = document.querySelector(".fleche-retour");
+flecheGauche.addEventListener ('click', function() {
+  let zoneProjets = document.querySelector(".zone-projets");
+  zoneProjets.style.display = 'block';
+  flecheGauche.style.display = 'none'; //désactivation affichage flèche gauche
+});   
+
+//fonction d'ajout de projet
+const ajouterPhoto = function() {
+  fetch('http://localhost:5678/api/works', { //envoi requête à l'API
+    method: 'POST',
+    body: JSON.stringify(travail),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => response.json())
+    .then(travailAjoute => {    
+  })
+};
+//exécution de la fonction d'ajout au clic sur le bouton
+const btnValider = document.querySelector(".btn-valider");
+btnValider.addEventListener("click", ajouterPhoto);
+
+
+
+
+
+// const file = document.querySelector("#file");
+// const title = document.querySelector("#titre");
+// const category = document.querySelector("#categorie");
+// file.addEventListener("change", function() {
+//   const maFile = this.files[0];
+//   const monTitle = title.value;
+//   const maCategory = category.value;
+//   const form = new FormData() 
+//   console.log("jai choisi une image");
+// })
 

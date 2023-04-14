@@ -44,22 +44,46 @@
 						<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 					</article>
 				</section>
-				<!-- ESSAIS MODALE -->
+				<!-- MODALE -->
 				<aside id="modale1" style="display:none" class="modale" aria-hidden="true" role="dialog">
 					<div class="fenetre-modale stop-modale" href="#modale1">
 						<div class="icones-modale">
-							<i class="fa-solid fa-arrow-left-long"></i>
+							<i class="fa-solid fa-arrow-left-long fleche-retour"></i>
 							<i class="fa-solid fa-xmark"></i>
 						</div>
 						<p class="titre-modale">Galerie photo</p>
-						<div class="section-projets">
+						<div class="zone-projets">
+							<div class="section-projets"></div>
+							<hr>
+							<input class="btn-ajouter" type="submit" value="Ajouter une photo">
+							<p class="supp-galerie">Supprimer la galerie</p>
 						</div>
 						<div class="section-formulaire">
+							<form action="#" method="post">
+								<div class="zone-upload">
+									<i class="fa-sharp fa-regular fa-image"></i>
+									<input type="file" name="photo" id="upload">
+									<label for="upload">+ Ajouter photo</label>
+									<p>jpg, png : 4mo max</p>
+								</div>							
+								<div class="champs">
+									<label for="name">Titre</label>
+									<input type="text" name="name" id="name">
+									<label for="name">Catégorie</label>
+									<select name="select" id="select">
+										<option value=""></option>
+										<option value="objets">Objets</option>
+										<option value="appartements">Appartements</option>
+										<option value="hotels-restaurants">Hôtels & restaurants</option>	
+									</select>
+								</div>
+							</form>
+							<hr>  
+							<input class="btn-valider" type="submit" value="Valider">
 						</div>
-						<hr>
 					</div>
 				</aside>
-				<!-- FIN ESSAIS MODALE -->
+				<!-- FIN MODALE -->
 				<section id="portfolio">
 					<h2 class="titre-seul">Mes Projets</h2>
 					<div class="modifier-projet">
