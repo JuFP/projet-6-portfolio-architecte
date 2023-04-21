@@ -59,22 +59,19 @@
 							<p class="supp-galerie">Supprimer la galerie</p>
 						</div>
 						<div class="section-formulaire">
-							<form action="#" method="post">
+							<form id="form-ajout" action="#" method="post">
 								<div class="zone-upload">
 									<i class="fa-sharp fa-regular fa-image"></i>
 									<input type="file" name="photo" id="upload">
-									<label for="upload">+ Ajouter photo</label>
+									<label id="photo-choisie" for="upload">+ Ajouter photo</label>
 									<p>jpg, png : 4mo max</p>
 								</div>							
 								<div class="champs">
 									<label for="name">Titre</label>
 									<input type="text" name="name" id="name">
 									<label for="name">Catégorie</label>
-									<select name="select" id="select">
-										<option value=""></option>
-										<option value="objets">Objets</option>
-										<option value="appartements">Appartements</option>
-										<option value="hotels-restaurants">Hôtels & restaurants</option>	
+									<select name="select" id="choix-categ">
+										<option value=""></option>	
 									</select>
 								</div>
 							</form>

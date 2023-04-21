@@ -33,7 +33,15 @@ const fermerModale = function (e) {
   document.body.style.backgroundColor = "initial";
   //scroll rétabli à la fermeture de la modale
   document.body.style.overflow = 'auto';
-
+   //on désactive la flèche gauche
+   const flecheGauche = document.querySelector(".fleche-retour");
+   flecheGauche.style.display = 'none';
+   //on désactive la modale de formulaire
+   let zoneFormulaire = document.querySelector(".section-formulaire");
+   zoneFormulaire.style.display = 'none';
+   //on affiche le premier visuel
+   let zoneProjets = document.querySelector(".zone-projets");
+   zoneProjets.style.display = 'block';
 };
 const stopPropagation = function (e) {
   e.stopPropagation();  
@@ -75,10 +83,10 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
         console.log("je clique sur poubelle!");
       });
     }
-    //on désactive la flèche gauche du html
+    //on affiche pas la flèche gauche
     const flecheGauche = document.querySelector(".fleche-retour");
     flecheGauche.style.display = 'none';
-    //on désactive la modale de formulaire
+    //on désactive le visuel de formulaire
     let zoneFormulaire = document.querySelector(".section-formulaire");
     zoneFormulaire.style.display = 'none';
 });
@@ -92,10 +100,10 @@ boutonAjouter.addEventListener ('click', function() {
   //on n'affiche plus la galerie:
   let zoneProjets = document.querySelector(".zone-projets");
   zoneProjets.style.display='none';
-  //on active l'affichage de la flèche retour
+  //affichage de la flèche retour
   const flecheGauche = document.querySelector(".fleche-retour");
   flecheGauche.style.display ='block';
-  //on active l'affichage du formulaire
+  //affichage du formulaire
   const formulaire = document.querySelector(".section-formulaire");
   formulaire.style.display='block';
 });
@@ -105,16 +113,46 @@ flecheGauche.addEventListener ('click', function() {
   let zoneProjets = document.querySelector(".zone-projets");
   zoneProjets.style.display = 'block';
   flecheGauche.style.display = 'none'; //désactivation affichage flèche gauche
+  let zoneFormulaire = document.querySelector(".section-formulaire");
+  zoneFormulaire.style.display='none'; //désactivation affichage deuxième visuel
 });   
-
-//fonction d'ajout de projet
+//affichage dynamique du choix de catégorie
+const choix = document.querySelector('#choix-categ');
+//récupération des catégories via l'api
+fetch('http://localhost:5678/api/categories')
+  .then(response => response.json())
+  .then(categories => {
+    for (const laCategorie of categories) {
+      const option = document.createElement('option');
+      option.value = laCategorie.id;
+      option.text = laCategorie.name;
+      choix.appendChild(option);
+    }
+})
+//AJOUT D'UN PROJET
 const ajouterPhoto = function() {
+  const donnees = new FormData();
+  const imageChoisie = document.querySelector("#photo-choisie");
+  const titreCree = document.querySelector("#name");
+  const categorieChoisie = document.querySelector("#choix-categ");
+  const fichierChoisi = document.querySelector("#photo-choisie");
+  donnees.append("image", imageChoisie.files[0]);
+  donnees.append("title", titreCree.value);
+  donnees.append("category", categorieChoisie.value);
+  fichierChoisi.addEventListener("click", function() { 
+    console.log("je choisis une image");
+  });
   fetch('http://localhost:5678/api/works', { //envoi requête à l'API
     method: 'POST',
-    body: JSON.stringify(travail),
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4'
+    },
+     body: JSON.stringify({
+      image:'string',
+      title:'string',
+      category:'integer'
+     }),
   })
     .then(response => response.json())
     .then(travailAjoute => {    
@@ -126,16 +164,4 @@ btnValider.addEventListener("click", ajouterPhoto);
 
 
 
-
-
-// const file = document.querySelector("#file");
-// const title = document.querySelector("#titre");
-// const category = document.querySelector("#categorie");
-// file.addEventListener("change", function() {
-//   const maFile = this.files[0];
-//   const monTitle = title.value;
-//   const maCategory = category.value;
-//   const form = new FormData() 
-//   console.log("jai choisi une image");
-// })
 

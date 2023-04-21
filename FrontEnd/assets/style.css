@@ -278,6 +278,9 @@ li:hover a {
 	align-items: center;
 	justify-content: center;
 }
+#upload {
+	display: none;
+}
 .zone-upload label {
 	display: flex;
   	align-items: center;
@@ -288,6 +291,7 @@ li:hover a {
   	width: 173px;
 	height: 36px;
 	margin-bottom: 20px;
+	cursor: pointer;
 }
 .fa-image {
 	font-size: 46px;
