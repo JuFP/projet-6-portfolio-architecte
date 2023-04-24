@@ -67,6 +67,11 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       const photo = document.createElement("img");
       const poubelle = document.createElement("i");
       poubelle.classList.add("fa-solid", "fa-trash-can");
+      // TEST exécution de la fonction suppression projet
+      poubelle.addEventListener("click", function() {
+        console.log("je clique sur la poubelle");
+        supprimerPhoto();
+      });
       photo.src = travaux[i].imageUrl; //changement d'image en fonction de l'indice du tableau travaux//
       projet.appendChild(photo);
       photosModale.appendChild(projet);
@@ -170,30 +175,29 @@ imageChargee.addEventListener('change', function() {
   texteIllus.style.display = "none";
 });
 // SUPPRESSION D'UN PROJET
-const supprimerPhoto = function() {
-  fetch(`http://localhost:5678/api/works/{id}`, { //envoi requête à l'API
+const supprimerPhoto = function(id) {
+  fetch(`http://localhost:5678/api/works/${id}`, { //envoi requête à l'API
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem("identifToken")}`
     }
   })
   .then(response => response.json())
-  .then(travailSupprime => console.log(travailSupprime)
-  )
+  .then(travailSupprime => console.log(travailSupprime))
 };
 //exécution de la fonction de suppression au clic
-document.addEventListener("DOMContentLoaded", function() {
-  const imagePoubelle = document.querySelector(".fa-solid.fa-trash-can");
-  //si valeur ok, exécution du console.log
-  if (imagePoubelle !== null) {
-    imagePoubelle.addEventListener("click", function() {
-      console.log("je clique sur la poubelle");
-    });
-    //si valeur null, affichage de l'erreur
-  } else {
-    console.log("problème");
-  }
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//   const imagePoubelle = document.querySelector(".fa-solid.fa-trash-can");
+//   //si valeur ok, exécution du console.log
+//   if (imagePoubelle !== null) {
+//     imagePoubelle.addEventListener("click", function() {
+//       console.log("je clique sur la poubelle");
+//     });
+//     //si valeur null, affichage de l'erreur
+//   } else {
+//     console.log("problème");
+//   }
+// });
 
 
 
