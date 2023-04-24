@@ -270,7 +270,7 @@ li:hover a {
 }
 .zone-upload {
 	background-color: #E8F1F7;
-	min-height: 169px;
+	height: 169px;
 	border-radius: 3px;
 	padding: 25px;
 	display: flex;
@@ -296,6 +296,9 @@ li:hover a {
 .fa-image {
 	font-size: 46px;
 	color: rgba(185, 197, 204, 1);
+}
+.zone-upload .miniature {
+	height: 80px;
 }
 .champs input {
 	height: 51px;

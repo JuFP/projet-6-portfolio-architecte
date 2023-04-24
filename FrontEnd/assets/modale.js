@@ -66,7 +66,7 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       const projet = document.createElement("figure"); 
       const photo = document.createElement("img");
       const poubelle = document.createElement("i");
-      poubelle.classList.add("fa-solid", "fa-trash-can"); 
+      poubelle.classList.add("fa-solid", "fa-trash-can");
       photo.src = travaux[i].imageUrl; //changement d'image en fonction de l'indice du tableau travaux//
       projet.appendChild(photo);
       photosModale.appendChild(projet);
@@ -78,10 +78,6 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
         poubelle.style.marginRight = "26px"; //réglage positionnement poubelle première photo
       }
       projet.appendChild(poubelle);
-      //consolelog au clic sur chaque poubelle
-      poubelle.addEventListener('click', function() {
-        console.log("je clique sur poubelle!");
-      });
     }
     //on affiche pas la flèche gauche
     const flecheGauche = document.querySelector(".fleche-retour");
@@ -132,35 +128,81 @@ fetch('http://localhost:5678/api/categories')
 //AJOUT D'UN PROJET
 const ajouterPhoto = function() {
   const donnees = new FormData();
-  const imageChoisie = document.querySelector("#photo-choisie");
+  const imageChoisie = document.querySelector("#upload");
   const titreCree = document.querySelector("#name");
   const categorieChoisie = document.querySelector("#choix-categ");
-  const fichierChoisi = document.querySelector("#photo-choisie");
   donnees.append("image", imageChoisie.files[0]);
   donnees.append("title", titreCree.value);
   donnees.append("category", categorieChoisie.value);
-  fichierChoisi.addEventListener("click", function() { 
-    console.log("je choisis une image");
-  });
+  //afficher les données qui seront envoyés à l'api:
+  console.log(imageChoisie.files[0], titreCree.value, categorieChoisie.value);
   fetch('http://localhost:5678/api/works', { //envoi requête à l'API
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4'
+      'Authorization': `Bearer ${localStorage.getItem("identifToken")}`
     },
-     body: JSON.stringify({
-      image:'string',
-      title:'string',
-      category:'integer'
-     }),
+     body: donnees,
   })
     .then(response => response.json())
-    .then(travailAjoute => {    
-  })
+    .then(travailAjoute =>console.log(travailAjoute) //afficher dans la console la réponse de l'API en JSON
+    )
 };
 //exécution de la fonction d'ajout au clic sur le bouton
 const btnValider = document.querySelector(".btn-valider");
 btnValider.addEventListener("click", ajouterPhoto);
+//affichage de la zone de l'image à ajouter//
+const boutonChoix = document.getElementById("bouton-choix");
+const imageChargee = document.getElementById("upload");
+const previewImage = document.querySelector(".zone-upload");
+const illustration = document.querySelector(".fa-image");
+const texteIllus = document.querySelector(".texte-illus");
+imageChargee.addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  //si un fichier est choisi, création d'une img en html
+  const img = document.createElement('img');
+  img.classList.add(".miniature");
+  img.src = URL.createObjectURL(file);
+  previewImage.appendChild(img);
+  // on désactive l'affichage de certains éléments
+  boutonChoix.style.display = "none";
+  illustration.style.display = "none";
+  texteIllus.style.display = "none";
+});
+// SUPPRESSION D'UN PROJET
+const supprimerPhoto = function() {
+  fetch(`http://localhost:5678/api/works/{id}`, { //envoi requête à l'API
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem("identifToken")}`
+    }
+  })
+  .then(response => response.json())
+  .then(travailSupprime => console.log(travailSupprime)
+  )
+};
+//exécution de la fonction de suppression au clic
+document.addEventListener("DOMContentLoaded", function() {
+  const imagePoubelle = document.querySelector(".fa-solid.fa-trash-can");
+  //si valeur ok, exécution du console.log
+  if (imagePoubelle !== null) {
+    imagePoubelle.addEventListener("click", function() {
+      console.log("je clique sur la poubelle");
+    });
+    //si valeur null, affichage de l'erreur
+  } else {
+    console.log("problème");
+  }
+});
+
+
+
+
+
+
+
+
+
 
 
 
