@@ -15,7 +15,6 @@ const ouvrirModale = function (e) {
   //scroll désactivé à l'ouverture de la modale
   document.body.style.overflow = 'hidden';
   document.body.addEventListener('click', function(e) {
-    console.log("je clique");
     fermerModale(e);
   });
 };
@@ -36,6 +35,9 @@ const fermerModale = function (e) {
    //on désactive la flèche gauche
    const flecheGauche = document.querySelector(".fleche-retour");
    flecheGauche.style.display = 'none';
+   //on désactive le message de titre vide
+   const spanTitre = document.querySelector(".titre-vide");
+   spanTitre.style.display = 'none';
    //on désactive la modale de formulaire
    let zoneFormulaire = document.querySelector(".section-formulaire");
    zoneFormulaire.style.display = 'none';
@@ -67,10 +69,15 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       const photo = document.createElement("img");
       const poubelle = document.createElement("i");
       poubelle.classList.add("fa-solid", "fa-trash-can");
-      // TEST exécution de la fonction suppression projet
-      poubelle.addEventListener("click", function() {
-        console.log("je clique sur la poubelle");
-        supprimerPhoto();
+      //ciblage de l'id de chaque projet crée
+      poubelle.setAttribute("data-id", travaux[i].id);
+      // SUPPRESSION D'UN PROJET
+      poubelle.addEventListener("click", function(e) {
+        e.preventDefault();
+        //récupération de l'id
+        const id = e.target.dataset.id;
+        //exécution de la fonction de suppression de projet
+        supprimerPhoto(id);
       });
       photo.src = travaux[i].imageUrl; //changement d'image en fonction de l'indice du tableau travaux//
       projet.appendChild(photo);
@@ -123,7 +130,8 @@ const choix = document.querySelector('#choix-categ');
 fetch('http://localhost:5678/api/categories')
   .then(response => response.json())
   .then(categories => {
-    for (const laCategorie of categories) {
+  //boucle qui recence et insère toutes les catégories
+    for (const laCategorie of categories) { 
       const option = document.createElement('option');
       option.value = laCategorie.id;
       option.text = laCategorie.name;
@@ -136,6 +144,12 @@ const ajouterPhoto = function() {
   const imageChoisie = document.querySelector("#upload");
   const titreCree = document.querySelector("#name");
   const categorieChoisie = document.querySelector("#choix-categ");
+  const titreVide = document.querySelector(".titre-vide");
+  // imposer le remplissage du champ de titre
+  if (titreCree.value === "") {
+    titreVide.textContent = "Veuillez indiquer un titre";
+    return;
+  }
   donnees.append("image", imageChoisie.files[0]);
   donnees.append("title", titreCree.value);
   donnees.append("category", categorieChoisie.value);
@@ -149,7 +163,7 @@ const ajouterPhoto = function() {
      body: donnees,
   })
     .then(response => response.json())
-    .then(travailAjoute =>console.log(travailAjoute) //afficher dans la console la réponse de l'API en JSON
+    .then(travailAjoute =>console.log(travailAjoute) //pour afficher dans la console la réponse de l'API en JSON
     )
 };
 //exécution de la fonction d'ajout au clic sur le bouton
@@ -185,19 +199,7 @@ const supprimerPhoto = function(id) {
   .then(response => response.json())
   .then(travailSupprime => console.log(travailSupprime))
 };
-//exécution de la fonction de suppression au clic
-// document.addEventListener("DOMContentLoaded", function() {
-//   const imagePoubelle = document.querySelector(".fa-solid.fa-trash-can");
-//   //si valeur ok, exécution du console.log
-//   if (imagePoubelle !== null) {
-//     imagePoubelle.addEventListener("click", function() {
-//       console.log("je clique sur la poubelle");
-//     });
-//     //si valeur null, affichage de l'erreur
-//   } else {
-//     console.log("problème");
-//   }
-// });
+
 
 
 

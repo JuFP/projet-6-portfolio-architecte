@@ -92,10 +92,6 @@ header {
 	justify-content: space-between;
 	margin: 50px 0
 }
-section {
-	margin: 50px 0
-}
-
 h1{
 	display: flex;
 	flex-direction: column;
@@ -139,6 +135,7 @@ li:hover a {
 #introduction {
 	display: flex;
 	align-items: center;
+	margin: 50px 0
 }
 #introduction figure {
 	flex: 1;
@@ -168,6 +165,9 @@ li:hover a {
 }
 #introduction p {
 	margin-bottom: 0.5em;
+}
+#portfolio {
+	margin-bottom: 60px;
 }
 #portfolio h2 {
 	text-align: center;
@@ -290,11 +290,12 @@ li:hover a {
 	border-radius: 50px;
   	width: 173px;
 	height: 36px;
+	margin-top: 15px;
 	margin-bottom: 20px;
 	cursor: pointer;
 }
 .fa-image {
-	font-size: 46px;
+	font-size: 56px;
 	color: rgba(185, 197, 204, 1);
 }
 .zone-upload .miniature {
@@ -305,7 +306,7 @@ li:hover a {
 	border: none;
 	width: 100%;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 .champs label {
 	display: flex;
@@ -317,6 +318,9 @@ li:hover a {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	width: 100%;
+}
+.titre-vide {
+	color: red;	
 }
 .section-formulaire .btn-valider {
 	background-color: #A7A7A7;	
@@ -349,10 +353,8 @@ li:hover a {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
 .gallery img {
 	width: 100%;
-
 }
 #contact {
 	width: 50%;
@@ -360,7 +362,6 @@ li:hover a {
 }
 #contact > * {
 	text-align: center;
-
 }
 #contact h2{
 	margin-bottom: 20px;
@@ -371,7 +372,6 @@ li:hover a {
 	display: flex;
 	flex-direction: column;
 }
-
 #contact input {
 	height: 36px;
 	font-size: 1.2em;
