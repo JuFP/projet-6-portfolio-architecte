@@ -123,6 +123,13 @@ flecheGauche.addEventListener ('click', function() {
   flecheGauche.style.display = 'none'; //désactivation affichage flèche gauche
   let zoneFormulaire = document.querySelector(".section-formulaire");
   zoneFormulaire.style.display='none'; //désactivation affichage deuxième visuel
+    //on désactive la photo uploadée
+  const miniature = document.querySelector(".miniature");
+  miniature.style.display = 'none';
+      //en réactivant le visuel initial de la zone-upload
+  boutonChoix.style.display = 'block';
+  illustration.style.display = 'block';
+  texteIllus.style.display = 'block';
 });   
 //affichage dynamique du choix de catégorie
 const choix = document.querySelector('#choix-categ');
@@ -169,6 +176,28 @@ const ajouterPhoto = function() {
 //exécution de la fonction d'ajout au clic sur le bouton
 const btnValider = document.querySelector(".btn-valider");
 btnValider.addEventListener("click", ajouterPhoto);
+
+
+// //affichage de la zone de l'image à ajouter//
+// const boutonChoix = document.getElementById("bouton-choix");
+// const imageChargee = document.getElementById("upload");
+// const previewImage = document.querySelector(".zone-upload");
+// const illustration = document.querySelector(".fa-image");
+// const texteIllus = document.querySelector(".texte-illus");
+// imageChargee.addEventListener('change', function() {
+//   const file = this.files[0];
+//   if (!file) return;
+//   //si un fichier est choisi, création d'une img en html
+//   const img = document.createElement('img');
+//   img.classList.add("miniature");
+//   img.src = URL.createObjectURL(file);
+//   previewImage.appendChild(img);
+//   // on désactive l'affichage de certains éléments
+//   boutonChoix.style.display = "none";
+//   illustration.style.display = "none";
+//   texteIllus.style.display = "none";
+// });
+
 //affichage de la zone de l'image à ajouter//
 const boutonChoix = document.getElementById("bouton-choix");
 const imageChargee = document.getElementById("upload");
@@ -176,13 +205,17 @@ const previewImage = document.querySelector(".zone-upload");
 const illustration = document.querySelector(".fa-image");
 const texteIllus = document.querySelector(".texte-illus");
 imageChargee.addEventListener('change', function() {
-  const file = this.files[0];
+  const file = this.files[0]; //premier élément choisi
   if (!file) return;
-  //si un fichier est choisi, création d'une img en html
-  const img = document.createElement('img');
-  img.classList.add(".miniature");
-  img.src = URL.createObjectURL(file);
-  previewImage.appendChild(img);
+  const lectFichier = new FileReader();
+  //quand le fichier est lu, création d'une img en html
+  lectFichier.onloadend = function() {
+    const img = document.createElement('img');
+    img.classList.add("miniature");
+    img.src = lectFichier.result; //définition de la src de l'image
+    previewImage.appendChild(img); //image ajoutée dans la zone-upload
+  }
+  lectFichier.readAsDataURL(file);//lecture du type de data
   // on désactive l'affichage de certains éléments
   boutonChoix.style.display = "none";
   illustration.style.display = "none";

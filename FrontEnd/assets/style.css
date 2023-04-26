@@ -47,6 +47,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+i {
+	cursor: pointer;
+}
 /** end reset css**/
 body {
 	margin:auto;
@@ -180,7 +183,6 @@ li:hover a {
 }
 .modifier-projet i {
 	padding-left: 31px;
-	cursor: pointer;
 }
 .modifier-projet__texte {
 	cursor: pointer;
@@ -224,7 +226,6 @@ li:hover a {
 	position: relative;
 	bottom: 79%;
 	right: -25%;
-	cursor: pointer;
 }
 .section-projets .fa-arrows-up-down-left-right {
 	font-size: 13px;
@@ -245,7 +246,6 @@ li:hover a {
 .icones-modale {
 	display: flex;
 	font-size: 14px;
-	cursor: pointer;
 }
 .fa-xmark {
 	justify-content: flex-end;
@@ -270,9 +270,8 @@ li:hover a {
 }
 .zone-upload {
 	background-color: #E8F1F7;
-	height: 169px;
+	height: 190px;
 	border-radius: 3px;
-	padding: 25px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -298,8 +297,8 @@ li:hover a {
 	font-size: 56px;
 	color: rgba(185, 197, 204, 1);
 }
-.zone-upload .miniature {
-	height: 80px;
+.miniature {
+	height: 100%;
 }
 .champs input {
 	height: 51px;
