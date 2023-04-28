@@ -68,7 +68,10 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       const projet = document.createElement("figure"); 
       const photo = document.createElement("img");
       const poubelle = document.createElement("i");
+      const edition = document.createElement("p");
       poubelle.classList.add("fa-solid", "fa-trash-can");
+      edition.textContent = "éditer";
+      projet.appendChild(edition);
       //ciblage de l'id de chaque projet crée
       poubelle.setAttribute("data-id", travaux[i].id);
       // SUPPRESSION D'UN PROJET
@@ -87,7 +90,6 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
       fleches.classList.add("fa-solid", "fa-arrows-up-down-left-right");
       if (i === 0) {
         projet.appendChild(fleches);
-        poubelle.style.marginRight = "26px"; //réglage positionnement poubelle première photo
       }
       projet.appendChild(poubelle);
     }
@@ -98,7 +100,6 @@ fetch('http://localhost:5678/api/works') //envoi requête à l'API//
     let zoneFormulaire = document.querySelector(".section-formulaire");
     zoneFormulaire.style.display = 'none';
 });
-
 //au clic sur bouton Ajouter, affichage modale d'ajout travaux
 const boutonAjouter = document.querySelector(".btn-ajouter");
 boutonAjouter.addEventListener ('click', function() {
@@ -152,14 +153,14 @@ const ajouterPhoto = function() {
   const titreCree = document.querySelector("#name");
   const categorieChoisie = document.querySelector("#choix-categ");
   const titreVide = document.querySelector(".titre-vide");
+  donnees.append("image", imageChoisie.files[0]);
+  donnees.append("title", titreCree.value);
+  donnees.append("category", categorieChoisie.value);
   // imposer le remplissage du champ de titre
   if (titreCree.value === "") {
     titreVide.textContent = "Veuillez indiquer un titre";
     return;
   }
-  donnees.append("image", imageChoisie.files[0]);
-  donnees.append("title", titreCree.value);
-  donnees.append("category", categorieChoisie.value);
   //afficher les données qui seront envoyés à l'api:
   console.log(imageChoisie.files[0], titreCree.value, categorieChoisie.value);
   fetch('http://localhost:5678/api/works', { //envoi requête à l'API
@@ -176,28 +177,6 @@ const ajouterPhoto = function() {
 //exécution de la fonction d'ajout au clic sur le bouton
 const btnValider = document.querySelector(".btn-valider");
 btnValider.addEventListener("click", ajouterPhoto);
-
-
-// //affichage de la zone de l'image à ajouter//
-// const boutonChoix = document.getElementById("bouton-choix");
-// const imageChargee = document.getElementById("upload");
-// const previewImage = document.querySelector(".zone-upload");
-// const illustration = document.querySelector(".fa-image");
-// const texteIllus = document.querySelector(".texte-illus");
-// imageChargee.addEventListener('change', function() {
-//   const file = this.files[0];
-//   if (!file) return;
-//   //si un fichier est choisi, création d'une img en html
-//   const img = document.createElement('img');
-//   img.classList.add("miniature");
-//   img.src = URL.createObjectURL(file);
-//   previewImage.appendChild(img);
-//   // on désactive l'affichage de certains éléments
-//   boutonChoix.style.display = "none";
-//   illustration.style.display = "none";
-//   texteIllus.style.display = "none";
-// });
-
 //affichage de la zone de l'image à ajouter//
 const boutonChoix = document.getElementById("bouton-choix");
 const imageChargee = document.getElementById("upload");
@@ -216,6 +195,8 @@ imageChargee.addEventListener('change', function() {
     previewImage.appendChild(img); //image ajoutée dans la zone-upload
   }
   lectFichier.readAsDataURL(file);//lecture du type de data
+  //changement couleur du btn après upload de l'image
+  btnValider.style.backgroundColor = '#1D6154';
   // on désactive l'affichage de certains éléments
   boutonChoix.style.display = "none";
   illustration.style.display = "none";
@@ -229,8 +210,11 @@ const supprimerPhoto = function(id) {
       'Authorization': `Bearer ${localStorage.getItem("identifToken")}`
     }
   })
-  .then(response => response.json())
-  .then(travailSupprime => console.log(travailSupprime))
+  .then (response => {if (response.ok) {
+    console.log("element supprimé")
+  } else {
+    console.log("problème lors de la suppression")
+  }})
 };
 
 
